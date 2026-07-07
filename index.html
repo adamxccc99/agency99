@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agency 99 | Premium Web Design for Small Brands</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold: #D4AF37;
+      --gold-light: #F4E4BA;
+      --dark: #0A0A0A;
+      --darker: #050505;
+      --gray: #1A1A1A;
+      --light-gray: #2A2A2A;
+      --text: #E8E8E8;
+      --text-muted: #888888;
+      --accent: #C9A84C;
+    }
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--darker);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+    
+    .particles {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    
+    .particle {
+      position: absolute;
+      width: 3px; height: 3px;
+      background: var(--gold);
+      border-radius: 50%;
+      opacity: 0.3;
+      animation: float 15s infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 0.3; }
+      90% { opacity: 0.3; }
+      100% { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
+    }
+    
+    nav {
+      position: fixed;
+      top: 0; width: 100%;
+      padding: 20px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      background: rgba(5,5,5,0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(212,175,55,0.1);
+    }
+    
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--gold);
+      letter-spacing: 2px;
+    }
+    
+    .logo span { color: var(--text); font-weight: 400; }
+    
+    .lang-switcher {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .lang-btn {
+      background: transparent;
+      border: 1px solid rgba(212,175,55,0.3);
+      color: var(--text-muted);
+      padding: 6px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.75rem;
+      font-weight: 600;
+      transition: all 0.3s;
+      font-family: 'Inter', sans-serif;
+    }
+    
+    .lang-btn:hover, .lang-btn.active {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: rgba(212,175,55,0.1);
+    }
+    
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 120px 5% 80px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(212,175,55,0.4);
+      padding: 8px 20px;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      color: var(--gold);
+      margin-bottom: 30px;
+      animation: fadeInDown 1s ease;
+    }
+    
+    .hero-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.3); }
+    }
+    
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      animation: fadeInUp 1s ease 0.2s both;
+    }
+    
+    .hero h1 .gold { color: var(--gold); }
+    
+    .hero-subtitle {
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      color: var(--text-muted);
+      max-width: 600px;
+      margin-bottom: 40px;
+      line-height: 1.6;
+      animation: fadeInUp 1s ease 0.4s both;
+    }
+    
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeInUp 1s ease 0.6s both;
+    }
+    
+    .btn {
+      padding: 14px 36px;
+      border-radius: 50px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Inter', sans-serif;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold), #B8941F);
+      color: var(--dark);
+      border: none;
+      box-shadow: 0 10px 40px rgba(212,175,55,0.3);
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 50px rgba(212,175,55,0.4);
+    }
+    
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    
+    .btn-outline:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: rgba(212,175,55,0.05);
+    }
+    
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .scroll-indicator {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      animation: bounce 2s infinite;
+    }
+    
+    .scroll-indicator svg {
+      width: 24px; height: 24px;
+      stroke: var(--gold);
+    }
+    
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(10px); }
+    }
+    
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 100px 5%;
+    }
+    
+    .section-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+    
+    .section-label {
+      color: var(--gold);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+    }
+    
+    .section-title .gold { color: var(--gold); }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .feature-card {
+      background: var(--gray);
+      border: 1px solid rgba(212,175,55,0.1);
+      border-radius: 20px;
+      padding: 40px 30px;
+      transition: all 0.4s;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 3px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s;
+    }
+    
+    .feature-card:hover::before { transform: scaleX(1); }
+    
+    .feature-card:hover {
+      border-color: rgba(212,175,55,0.3);
+      transform: translateY(-5px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+    
+    .feature-icon {
+      width: 56px; height: 56px;
+      background: rgba(212,175,55,0.1);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      font-size: 1.5rem;
+    }
+    
+    .feature-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    
+    .feature-card p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+    
+    .pricing-section {
+      background: var(--dark);
+    }
+    
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+    
+    .pricing-card {
+      background: var(--gray);
+      border: 1px solid rgba(212,175,55,0.1);
+      border-radius: 24px;
+      padding: 40px 28px;
+      text-align: center;
+      transition: all 0.4s;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .pricing-card.featured {
+      border-color: var(--gold);
+      background: linear-gradient(180deg, var(--gray) 0%, rgba(212,175,55,0.05) 100%);
+      transform: scale(1.05);
+    }
+    
+    .pricing-card.featured::after {
+      content: 'POPULAR';
+      position: absolute;
+      top: 16px; right: -30px;
+      background: var(--gold);
+      color: var(--dark);
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 4px 40px;
+      transform: rotate(45deg);
+    }
+    
+    .pricing-card:hover {
+      border-color: rgba(212,175,55,0.4);
+      transform: translateY(-8px);
+      box-shadow: 0 25px 70px rgba(0,0,0,0.5);
+    }
+    
+    .pricing-card.featured:hover {
+      transform: scale(1.05) translateY(-8px);
+    }
+    
+    .plan-name {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+    }
+    
+    .plan-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 900;
+      margin: 16px 0;
+    }
+    
+    .plan-price span {
+      font-size: 1rem;
+      color: var(--text-muted);
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+    }
+    
+    .plan-desc {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-bottom: 24px;
+      min-height: 40px;
+    }
+    
+    .plan-features {
+      list-style: none;
+      text-align: left;
+      margin-bottom: 30px;
+    }
+    
+    .plan-features li {
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .plan-features li::before {
+      content: '✓';
+      color: var(--gold);
+      font-weight: 700;
+      min-width: 16px;
+    }
+    
+    .plan-btn {
+      width: 100%;
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(212,175,55,0.3);
+      background: transparent;
+      color: var(--text);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+    }
+    
+    .plan-btn:hover {
+      background: var(--gold);
+      color: var(--dark);
+      border-color: var(--gold);
+    }
+    
+    .pricing-card.featured .plan-btn {
+      background: var(--gold);
+      color: var(--dark);
+      border-color: var(--gold);
+    }
+    
+    .pricing-card.featured .plan-btn:hover {
+      background: #E5C158;
+      box-shadow: 0 10px 30px rgba(212,175,55,0.3);
+    }
+    
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(10px);
+      z-index: 2000;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    
+    .modal-overlay.active { display: flex; }
+    
+    .modal {
+      background: var(--gray);
+      border: 1px solid rgba(212,175,55,0.2);
+      border-radius: 24px;
+      padding: 40px;
+      max-width: 500px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      animation: modalIn 0.4s ease;
+    }
+    
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.9) translateY(20px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    
+    .modal-close {
+      position: absolute;
+      top: 20px; right: 20px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+    }
+    
+    .modal-close:hover {
+      background: rgba(255,255,255,0.1);
+      color: var(--text);
+    }
+    
+    .modal h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      margin-bottom: 8px;
+    }
+    
+    .modal-subtitle {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 28px;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 14px 16px;
+      background: var(--light-gray);
+      border: 1px solid rgba(212,175,55,0.1);
+      border-radius: 12px;
+      color: var(--text);
+      font-size: 0.95rem;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.3s;
+    }
+    
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(212,175,55,0.1);
+    }
+    
+    .form-group textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+    
+    .selected-plan-badge {
+      display: inline-block;
+      background: rgba(212,175,55,0.15);
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+    
+    .submit-btn {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, var(--gold), #B8941F);
+      color: var(--dark);
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-family: 'Inter', sans-serif;
+      margin-top: 10px;
+    }
+    
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(212,175,55,0.3);
+    }
+    
+    footer {
+      background: var(--dark);
+      border-top: 1px solid rgba(212,175,55,0.1);
+      padding: 60px 5% 40px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+    
+    .footer-tagline {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 30px;
+    }
+    
+    .instagram-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text);
+      text-decoration: none;
+      padding: 12px 28px;
+      border: 1px solid rgba(212,175,55,0.3);
+      border-radius: 50px;
+      transition: all 0.3s;
+      font-weight: 500;
+    }
+    
+    .instagram-link:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: rgba(212,175,55,0.05);
+    }
+    
+    .instagram-link svg {
+      width: 20px; height: 20px;
+      fill: currentColor;
+    }
+    
+    .copyright {
+      margin-top: 40px;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+    
+    @media (max-width: 768px) {
+      .pricing-card.featured { transform: scale(1); }
+      .pricing-card.featured:hover { transform: scale(1) translateY(-8px); }
+      .hero-cta { flex-direction: column; width: 100%; }
+      .btn { width: 100%; justify-content: center; }
+      .modal { padding: 30px 20px; }
+    }
+    
+    [dir="rtl"] .plan-features li { text-align: right; }
+    [dir="rtl"] .feature-card { text-align: right; }
+    [dir="rtl"] .modal { direction: rtl; }
+  </style>
+</head>
+<body>
+
+<div class="particles" id="particles"></div>
+
+<nav>
+  <div class="logo">AGENCY <span>99</span></div>
+  <div class="lang-switcher">
+    <button class="lang-btn active" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" onclick="setLang('fr')">FR</button>
+    <button class="lang-btn" onclick="setLang('ar')">AR</button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge" data-en="Premium Web Design for Small Brands" data-fr="Design Web Premium pour Petites Marques" data-ar="تصميم ويب متميز للعلامات التجارية الصغيرة">Premium Web Design for Small Brands</div>
+  <h1 data-en="We Build <span class='gold'>Stunning</span> Websites for Small Prices" data-fr="Nous Créons des Sites <span class='gold'>Époustouflants</span> à Petits Prix" data-ar="نبني مواقع <span class='gold'>مذهلة</span> بأسعار صغيرة">We Build <span class="gold">Stunning</span> Websites for Small Prices</h1>
+  <p class="hero-subtitle" data-en="Professional, responsive, and SEO-optimized websites tailored for small brands. Turn your vision into a digital masterpiece." data-fr="Des sites professionnels, responsives et optimisés SEO, conçus sur mesure pour les petites marques. Transformez votre vision en chef-d'œuvre numérique." data-ar="مواقع احترافية متجاوبة ومُحسّنة لمحركات البحث، مصممة خصيصًا للعلامات التجارية الصغيرة. حوّل رؤيتك إلى تحفة رقمية.">Professional, responsive, and SEO-optimized websites tailored for small brands. Turn your vision into a digital masterpiece.</p>
+  <div class="hero-cta">
+    <a href="#pricing" class="btn btn-primary" data-en="View Our Plans" data-fr="Voir Nos Forfaits" data-ar="اطلع على خططنا">View Our Plans</a>
+    <a href="#contact" class="btn btn-outline" data-en="Get in Touch" data-fr="Contactez-Nous" data-ar="تواصل معنا">Get in Touch</a>
+  </div>
+  <div class="scroll-indicator">
+    <span data-en="Scroll" data-fr="Défiler" data-ar="تمرير">Scroll</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
+  </div>
+</section>
+
+<section id="features">
+  <div class="section-header">
+    <div class="section-label" data-en="Why Choose Us" data-fr="Pourquoi Nous Choisir" data-ar="لماذا تختارنا">Why Choose Us</div>
+    <h2 class="section-title" data-en="Everything You <span class='gold'>Need</span>" data-fr="Tout Ce Dont Vous <span class='gold'>Avez Besoin</span>" data-ar="كل ما <span class='gold'>تحتاجه</span>">Everything You <span class="gold">Need</span></h2>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <h3 data-en="Lightning Fast" data-fr="Ultra Rapide" data-ar="سريع جدًا">Lightning Fast</h3>
+      <p data-en="Optimized code and assets for blazing fast load times that keep visitors engaged." data-fr="Code et ressources optimisés pour des temps de chargement éclairs qui maintiennent l'engagement." data-ar="كود وموارد مُحسّنة لأوقات تحميل سريعة جدًا تحافظ على تفاعل الزوار.">Optimized code and assets for blazing fast load times that keep visitors engaged.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📱</div>
+      <h3 data-en="Fully Responsive" data-fr="Entièrement Responsive" data-ar="متجاوب بالكامل">Fully Responsive</h3>
+      <p data-en="Flawless experience on every device — mobile, tablet, and desktop." data-fr="Expérience impeccable sur tous les appareils — mobile, tablette et ordinateur." data-ar="تجربة خالية من العيوب على كل جهاز — جوال، تابلت، وسطح مكتب.">Flawless experience on every device — mobile, tablet, and desktop.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔍</div>
+      <h3 data-en="SEO Ready" data-fr="Prêt pour le SEO" data-ar="جاهز لمحركات البحث">SEO Ready</h3>
+      <p data-en="Built with best SEO practices to help your brand rank higher on Google." data-fr="Construit avec les meilleures pratiques SEO pour aider votre marque à mieux se classer sur Google." data-ar="مبني بأفضل ممارسات تحسين محركات البحث لمساعدة علامتك التجارية على الترتيب الأعلى في جوجل.">Built with best SEO practices to help your brand rank higher on Google.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎨</div>
+      <h3 data-en="Custom Design" data-fr="Design Sur Mesure" data-ar="تصميم مخصص">Custom Design</h3>
+      <p data-en="Unique designs crafted specifically for your brand identity and goals." data-fr="Des designs uniques conçus spécifiquement pour l'identité et les objectifs de votre marque." data-ar="تصاميم فريدة مصممة خصيصًا لهوية علامتك التجارية وأهدافك.">Unique designs crafted specifically for your brand identity and goals.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🚀</div>
+      <h3 data-en="Quick Delivery" data-fr="Livraison Rapide" data-ar="تسليم سريع">Quick Delivery</h3>
+      <p data-en="Get your website live in days, not weeks. We value your time." data-fr="Mettez votre site en ligne en jours, pas en semaines. Nous valorisons votre temps." data-ar="احصل على موقعك مباشرًا في أيام وليس أسابيع. نحن نقدر وقتك.">Get your website live in days, not weeks. We value your time.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">💬</div>
+      <h3 data-en="24/7 Support" data-fr="Support 24/7" data-ar="دعم على مدار الساعة">24/7 Support</h3>
+      <p data-en="Round-the-clock assistance to ensure your website runs smoothly always." data-fr="Assistance permanente pour garantir le bon fonctionnement de votre site en tout temps." data-ar="مساعدة على مدار الساعة لضمان تشغيل موقعك بسلاسة دائمًا.">Round-the-clock assistance to ensure your website runs smoothly always.</p>
+    </div>
+  </div>
+</section>
+
+<section class="pricing-section" id="pricing">
+  <div class="section-header">
+    <div class="section-label" data-en="Pricing" data-fr="Tarification" data-ar="الأسعار">Pricing</div>
+    <h2 class="section-title" data-en="Choose Your <span class='gold'>Plan</span>" data-fr="Choisissez Votre <span class='gold'>Forfait</span>" data-ar="اختر <span class='gold'>خطتك</span>">Choose Your <span class="gold">Plan</span></h2>
+  </div>
+  <div class="pricing-grid">
+    <div class="pricing-card">
+      <div class="plan-name" data-en="STARTER" data-fr="DÉMARRAGE" data-ar="البداية">STARTER</div>
+      <div class="plan-price">$80<span data-en="/one-time" data-fr="/unique" data-ar="/مرة واحدة">/one-time</span></div>
+      <div class="plan-desc" data-en="Perfect for personal portfolios and simple landing pages." data-fr="Parfait pour les portfolios personnels et les pages de destination simples." data-ar="مثالي للمحافظ الشخصية وصفحات الهبوط البسيطة.">Perfect for personal portfolios and simple landing pages.</div>
+      <ul class="plan-features">
+        <li data-en="1 Page Website" data-fr="Site 1 Page" data-ar="موقع من صفحة واحدة">1 Page Website</li>
+        <li data-en="Mobile Responsive" data-fr="Responsive Mobile" data-ar="متجاوب مع الجوال">Mobile Responsive</li>
+        <li data-en="Basic SEO Setup" data-fr="Configuration SEO de Base" data-ar="إعداد SEO أساسي">Basic SEO Setup</li>
+        <li data-en="Contact Form" data-fr="Formulaire de Contact" data-ar="نموذج اتصال">Contact Form</li>
+        <li data-en="3 Days Delivery" data-fr="Livraison en 3 Jours" data-ar="تسليم في 3 أيام">3 Days Delivery</li>
+      </ul>
+      <button class="plan-btn" onclick="openModal('Starter', '$80')" data-en="Order Now" data-fr="Commander" data-ar="اطلب الآن">Order Now</button>
+    </div>
+    
+    <div class="pricing-card">
+      <div class="plan-name" data-en="BASIC" data-fr="BASIQUE" data-ar="أساسي">BASIC</div>
+      <div class="plan-price">$120<span data-en="/one-time" data-fr="/unique" data-ar="/مرة واحدة">/one-time</span></div>
+      <div class="plan-desc" data-en="Great for small businesses needing a professional online presence." data-fr="Idéal pour les petites entreprises ayant besoin d'une présence en ligne professionnelle." data-ar="رائع للشركات الصغيرة التي تحتاج إلى وجود احترافي على الإنترنت.">Great for small businesses needing a professional online presence.</div>
+      <ul class="plan-features">
+        <li data-en="Up to 3 Pages" data-fr="Jusqu'à 3 Pages" data-ar="حتى 3 صفحات">Up to 3 Pages</li>
+        <li data-en="Mobile Responsive" data-fr="Responsive Mobile" data-ar="متجاوب مع الجوال">Mobile Responsive</li>
+        <li data-en="Advanced SEO" data-fr="SEO Avancé" data-ar="SEO متقدم">Advanced SEO</li>
+        <li data-en="Social Media Links" data-fr="Liens Réseaux Sociaux" data-ar="روابط التواصل الاجتماعي">Social Media Links</li>
+        <li data-en="Google Maps Integration" data-fr="Intégration Google Maps" data-ar="دمج خرائط جوجل">Google Maps Integration</li>
+        <li data-en="5 Days Delivery" data-fr="Livraison en 5 Jours" data-ar="تسليم في 5 أيام">5 Days Delivery</li>
+      </ul>
+      <button class="plan-btn" onclick="openModal('Basic', '$120')" data-en="Order Now" data-fr="Commander" data-ar="اطلب الآن">Order Now</button>
+    </div>
+    
+    <div class="pricing-card featured">
+      <div class="plan-name" data-en="PROFESSIONAL" data-fr="PROFESSIONNEL" data-ar="احترافي">PROFESSIONAL</div>
+      <div class="plan-price">$200<span data-en="/one-time" data-fr="/unique" data-ar="/مرة واحدة">/one-time</span></div>
+      <div class="plan-desc" data-en="The sweet spot for growing brands with full functionality." data-fr="Le choix idéal pour les marques en croissance avec toutes les fonctionnalités." data-ar="الخيار المثالي للعلامات التجارية النامية مع جميع الوظائف.">The sweet spot for growing brands with full functionality.</div>
+      <ul class="plan-features">
+        <li data-en="Up to 5 Pages" data-fr="Jusqu'à 5 Pages" data-ar="حتى 5 صفحات">Up to 5 Pages</li>
+        <li data-en="Mobile Responsive" data-fr="Responsive Mobile" data-ar="متجاوب مع الجوال">Mobile Responsive</li>
+        <li data-en="Full SEO Package" data-fr="Pack SEO Complet" data-ar="حزمة SEO كاملة">Full SEO Package</li>
+        <li data-en="Blog Section" data-fr="Section Blog" data-ar="قسم المدونة">Blog Section</li>
+        <li data-en="Gallery / Portfolio" data-fr="Galerie / Portfolio" data-ar="معرض / محفظة">Gallery / Portfolio</li>
+        <li data-en="Animations & Effects" data-fr="Animations & Effets" data-ar="رسوم متحركة وتأثيرات">Animations & Effects</li>
+        <li data-en="7 Days Delivery" data-fr="Livraison en 7 Jours" data-ar="تسليم في 7 أيام">7 Days Delivery</li>
+      </ul>
+      <button class="plan-btn" onclick="openModal('Professional', '$200')" data-en="Order Now" data-fr="Commander" data-ar="اطلب الآن">Order Now</button>
+    </div>
+    
+    <div class="pricing-card">
+      <div class="plan-name" data-en="BUSINESS" data-fr="ENTREPRISE" data-ar="أعمال">BUSINESS</div>
+      <div class="plan-price">$280<span data-en="/one-time" data-fr="/unique" data-ar="/مرة واحدة">/one-time</span></div>
+      <div class="plan-desc" data-en="Complete solution for established businesses with e-commerce needs." data-fr="Solution complète pour les entreprises établies avec besoins e-commerce." data-ar="حل كامل للشركات الراسخة مع احتياجات التجارة الإلكترونية.">Complete solution for established businesses with e-commerce needs.</div>
+      <ul class="plan-features">
+        <li data-en="Up to 8 Pages" data-fr="Jusqu'à 8 Pages" data-ar="حتى 8 صفحات">Up to 8 Pages</li>
+        <li data-en="E-Commerce Ready" data-fr="Prêt pour E-Commerce" data-ar="جاهز للتجارة الإلكترونية">E-Commerce Ready</li>
+        <li data-en="Payment Integration" data-fr="Intégration Paiement" data-ar="دمج الدفع">Payment Integration</li>
+        <li data-en="Admin Dashboard" data-fr="Tableau de Bord Admin" data-ar="لوحة تحكم المشرف">Admin Dashboard</li>
+        <li data-en="Newsletter System" data-fr="Système Newsletter" data-ar="نظام النشرة الإخبارية">Newsletter System</li>
+        <li data-en="Priority Support" data-fr="Support Prioritaire" data-ar="دعم ذو أولوية">Priority Support</li>
+        <li data-en="10 Days Delivery" data-fr="Livraison en 10 Jours" data-ar="تسليم في 10 أيام">10 Days Delivery</li>
+      </ul>
+      <button class="plan-btn" onclick="openModal('Business', '$280')" data-en="Order Now" data-fr="Commander" data-ar="اطلب الآن">Order Now</button>
+    </div>
+    
+    <div class="pricing-card">
+      <div class="plan-name" data-en="ENTERPRISE" data-fr="ENTREPRISE+" data-ar="مؤسسي">ENTERPRISE</div>
+      <div class="plan-price">$350<span data-en="/one-time" data-fr="/unique" data-ar="/مرة واحدة">/one-time</span></div>
+      <div class="plan-desc" data-en="The ultimate package for brands that want to dominate online." data-fr="Le forfait ultime pour les marques qui veulent dominer en ligne." data-ar="الحزمة النهائية للعلامات التجارية التي تريد التفوق على الإنترنت.">The ultimate package for brands that want to dominate online.</div>
+      <ul class="plan-features">
+        <li data-en="Unlimited Pages" data-fr="Pages Illimitées" data-ar="صفحات غير محدودة">Unlimited Pages</li>
+        <li data-en="Full E-Commerce" data-fr="E-Commerce Complet" data-ar="تجارة إلكترونية كاملة">Full E-Commerce</li>
+        <li data-en="Custom Animations" data-fr="Animations Personnalisées" data-ar="رسوم متحركة مخصصة">Custom Animations</li>
+        <li data-en="Multi-Language" data-fr="Multi-Langue" data-ar="متعدد اللغات">Multi-Language</li>
+        <li data-en="Booking System" data-fr="Système de Réservation" data-ar="نظام الحجز">Booking System</li>
+        <li data-en="Analytics Setup" data-fr="Configuration Analytics" data-ar="إعداد التحليلات">Analytics Setup</li>
+        <li data-en="Lifetime Support" data-fr="Support à Vie" data-ar="دعم مدى الحياة">Lifetime Support</li>
+        <li data-en="14 Days Delivery" data-fr="Livraison en 14 Jours" data-ar="تسليم في 14 يومًا">14 Days Delivery</li>
+      </ul>
+      <button class="plan-btn" onclick="openModal('Enterprise', '$350')" data-en="Order Now" data-fr="Commander" data-ar="اطلب الآن">Order Now</button>
+    </div>
+  </div>
+</section>
+
+<div class="modal-overlay" id="orderModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <h3 data-en="Start Your Project" data-fr="Démarrer Votre Projet" data-ar="ابدأ مشروعك">Start Your Project</h3>
+    <p class="modal-subtitle" data-en="Fill in the details and we'll get back to you within 24 hours." data-fr="Remplissez les détails et nous vous recontacterons sous 24 heures." data-ar="املأ التفاصيل وسنعود إليك خلال 24 ساعة.">Fill in the details and we'll get back to you within 24 hours.</p>
+    
+    <div class="selected-plan-badge" id="selectedPlanBadge">Starter — $80</div>
+    
+    <form action="https://formspree.io/f/xjgqzebr" method="POST">
+      <input type="hidden" name="_subject" value="New Order from Agency 99">
+      <input type="hidden" name="chosen_plan" id="planInput" value="Starter - $80">
+      
+      <div class="form-group">
+        <label data-en="Your Email" data-fr="Votre Email" data-ar="بريدك الإلكتروني">Your Email</label>
+        <input type="email" name="email" placeholder="you@example.com" required>
+      </div>
+      
+      <div class="form-group">
+        <label data-en="Your Name" data-fr="Votre Nom" data-ar="اسمك">Your Name</label>
+        <input type="text" name="name" placeholder="John Doe" required>
+      </div>
+      
+      <div class="form-group">
+        <label data-en="What Do You Want?" data-fr="Que Souhaitez-Vous ?" data-ar="ماذا تريد؟">What Do You Want?</label>
+        <textarea name="message" placeholder="Describe your dream website, brand colors, features you need, examples you like..." required></textarea>
+      </div>
+      
+      <button type="submit" class="submit-btn" data-en="Send Order" data-fr="Envoyer la Commande" data-ar="إرسال الطلب">Send Order</button>
+    </form>
+  </div>
+</div>
+
+<footer id="contact">
+  <div class="footer-logo">AGENCY 99</div>
+  <p class="footer-tagline" data-en="Building digital dreams, one website at a time." data-fr="Construire des rêves numériques, un site à la fois." data-ar="نبني الأحلام الرقمية، موقعًا تلو الآخر.">Building digital dreams, one website at a time.</p>
+  <a href="https://www.instagram.com/agency99____" target="_blank" class="instagram-link">
+    <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+    <span data-en="Follow us on Instagram" data-fr="Suivez-nous sur Instagram" data-ar="تابعنا على إنستغرام">Follow us on Instagram</span>
+  </a>
+  <div class="copyright" data-en="© 2026 Agency 99. All rights reserved." data-fr="© 2026 Agency 99. Tous droits réservés." data-ar="© 2026 وكالة 99. جميع الحقوق محفوظة.">© 2026 Agency 99. All rights reserved.</div>
+</footer>
+
+<script>
+  let currentLang = 'en';
+  
+  function setLang(lang) {
+    currentLang = lang;
+    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    document.querySelectorAll('[data-en]').forEach(el => {
+      if (el.getAttribute('data-' + lang)) {
+        el.innerHTML = el.getAttribute('data-' + lang);
+      }
+    });
+    
+    if (lang === 'ar') {
+      document.body.style.direction = 'rtl';
+      document.querySelector('.modal').style.direction = 'rtl';
+    } else {
+      document.body.style.direction = 'ltr';
+      document.querySelector('.modal').style.direction = 'ltr';
+    }
+  }
+  
+  function openModal(plan, price) {
+    document.getElementById('selectedPlanBadge').textContent = plan + ' — ' + price;
+    document.getElementById('planInput').value = plan + ' - ' + price;
+    document.getElementById('orderModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  
+  function closeModal() {
+    document.getElementById('orderModal').classList.remove('active');
+    document.body.style.overflow = 'auto';
+  }
+  
+  document.getElementById('orderModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+  
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModal();
+  });
+  
+  const particlesContainer = document.getElementById('particles');
+  for (let i = 0; i < 30; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.animationDelay = Math.random() * 15 + 's';
+    p.style.animationDuration = (10 + Math.random() * 10) + 's';
+    particlesContainer.appendChild(p);
+  }
+  
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+  
+  document.querySelectorAll('.feature-card, .pricing-card').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(30px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
